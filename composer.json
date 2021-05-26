@@ -1,0 +1,21 @@
+{
+    "name": "piece-of-kake/value-object",
+    "description": "Generic value object classes",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sasa Andjelic",
+            "email": "sasasmail@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "piece-of-kake/exception": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PoK\\ValueObject\\": "src/"
+        }
+    }
+}
