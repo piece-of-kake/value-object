@@ -37,12 +37,6 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
     
     public function filter(callable $callback): Collection
     {
-        $result = [];
-        
-        foreach ($this->items as $item) {
-            if($callback($item)) $result[] = $item;
-        }
-        
         return $this->newStatic(array_filter($this->items, $callback));
     }
 
