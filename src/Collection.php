@@ -25,8 +25,8 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 
     public function each(callable $callback): void
     {
-        foreach ($this->items as $item) {
-            $callback($item);
+        foreach ($this->items as $key => $item) {
+            $callback($item, $key);
         }
     }
     
