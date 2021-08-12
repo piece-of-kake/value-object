@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "piece-of-kake/exception": "^1.0"
+        "piece-of-kake/exception": "dev-main"
     },
     "autoload": {
         "psr-4": {
