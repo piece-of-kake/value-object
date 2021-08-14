@@ -2,14 +2,15 @@
 
 namespace PoK\ValueObject;
 
-class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
+class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
+{
     private $items;
-    
+
     public function __construct(array $items)
     {
         $this->items = $items;
     }
-    
+
     public function first()
     {
         $arrayValues = array_values($this->items);
@@ -29,12 +30,12 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
             $callback($item, $key);
         }
     }
-    
+
     public function map(callable $callback): self
     {
         return $this->newStatic(array_map($callback, $this->items));
     }
-    
+
     public function filter(callable $callback): Collection
     {
         return $this->newStatic(array_filter($this->items, $callback));
@@ -60,20 +61,20 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
     public function find(callable $callback)
     {
         foreach ($this->items as $key => $item) {
-            if($callback($item, $key)) return $item;
+            if ($callback($item, $key)) return $item;
         }
 
         return null;
     }
-    
+
     public function reduce(callable $callback, $initial)
     {
         $accumulator = $initial;
-        
+
         foreach ($this->items as $key => $item) {
             $accumulator = $callback($accumulator, $item, $key);
         }
-        
+
         return $accumulator;
     }
 
@@ -92,17 +93,17 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
     {
         return $this->newStatic(array_slice($this->items, 1));
     }
-    
+
     public function skip(callable $callaback)
     {
         $items = $this->items;
-        
+
         foreach ($items as $key => $value) {
             if ($callaback($value)) {
                 unset($items[$key]);
             }
         }
-        
+
         return $this->newStatic($items);
     }
 
@@ -130,15 +131,38 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
     {
         return implode($glue, $this->items);
     }
-    
+
+    /**
+     * IMPORTANT!!
+     * If you need only values (F.E. indexed array) ALWAYS use arrayValues().
+     * The reason is that if you perform skip on a indexed array Collection it will become associative and you can have an isse.
+     *
+     * @return array
+     */
     public function toArray(): array
     {
         return $this->items;
     }
-    
+
+    /**
+     * Get underlying array values.
+     * Use this if you need only array values, especially if you performed skip() on an indexed array Collection!
+     *
+     * @return array
+     */
+    public function arrayValues(): array
+    {
+        return array_values($this->items);
+    }
+
+    public function arrayKeys(): array
+    {
+        return array_keys($this->items);
+    }
+
     /**
      * Alias of offsetExists, because PHP array_key_exists() doesn't work properly.
-     * 
+     *
      * @param string|int $key
      * @return bool
      */
@@ -146,48 +170,54 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
     {
         return $this->offsetExists($key);
     }
-    
+
     /**
      * Because PHP empty() doesn't work with ArrayAccess as one would hope.
-     * 
+     *
      * @return bool
      */
     public function isEmpty(): bool
     {
         return empty($this->items);
     }
-    
+
     /**
      * PHP array_key_exists() should use this function but it doesn't. Call this directly or use $this->has().
-     * 
+     *
      * @param string|int $offset
      * @return bool
      */
-    public function offsetExists($offset): bool {
+    public function offsetExists($offset): bool
+    {
         return array_key_exists($offset, $this->items);
     }
-    
-    public function offsetGet($offset) {
+
+    public function offsetGet($offset)
+    {
         return $this->items[$offset];
     }
-    
-    public function offsetSet($offset, $value): void {
+
+    public function offsetSet($offset, $value): void
+    {
         if ($offset === null) {
             $this->items[] = $value;
         } else {
             $this->items[$offset] = $value;
         }
     }
-    
-    public function offsetUnset($offset): void {
+
+    public function offsetUnset($offset): void
+    {
         unset($this->items[$offset]);
     }
-    
-    public function count(): int {
+
+    public function count(): int
+    {
         return count($this->items);
     }
-    
-    public function getIterator(): \Traversable {
+
+    public function getIterator(): \Traversable
+    {
         return new \ArrayIterator($this->items);
     }
 }
