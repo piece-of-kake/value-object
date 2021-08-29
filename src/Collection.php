@@ -107,7 +107,12 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->newStatic($items);
     }
 
-    public function slice($index)
+    public function slice(int $offset, int $length = 1)
+    {
+        return $this->newStatic(array_slice($this->items, $offset, $length));
+    }
+
+    public function extract($index)
     {
         return $this->newStatic($this->items[$index]);
     }
