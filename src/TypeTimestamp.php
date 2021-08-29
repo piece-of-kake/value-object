@@ -38,6 +38,30 @@ class TypeTimestamp
         return (int) $interval->format('%y');
     }
 
+    public function addSeconds(int $seconds)
+    {
+        $this->value += $seconds;
+        return $this;
+    }
+
+    public function addMinutes(int $minutes)
+    {
+        $this->value += $minutes * 60;
+        return $this;
+    }
+
+    public function addHours(int $hours)
+    {
+        $this->value += $hours * 60 * 60;
+        return $this;
+    }
+
+    public function addDays(int $days)
+    {
+        $this->value += $days * 60 * 60 * 24;
+        return $this;
+    }
+
     protected function validateValue()
     {
         if (!is_int($this->value))
