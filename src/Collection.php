@@ -89,6 +89,30 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->newStatic($newArray);
     }
 
+    /**
+     * Starts at the beginning of the collection and replaces keys until all new keys are used or the end of the
+     * collection is reached.
+     *
+     * @param array $keys
+     */
+    public function replaceKeys(array $keys)
+    {
+        $keys = array_values($keys);
+
+        $newArray = [];
+
+        $increment = 0;
+        foreach ($this->items as $key => $value) {
+            if (array_key_exists($increment, $keys)) {
+                $newArray[$keys[$increment++]] = $value;
+            } else {
+                $newArray[$key] = $value;
+            }
+        }
+
+        return $this->newStatic($newArray);
+    }
+
     public function skipFirst()
     {
         return $this->newStatic(array_slice($this->items, 1));
