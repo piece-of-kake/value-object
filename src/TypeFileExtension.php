@@ -12,6 +12,7 @@ class TypeFileExtension
     const EXTENSION_NAME_GIF = 'gif';
     const EXTENSION_NAME_BMP = 'bmp';
     const EXTENSION_NAME_ICO = 'ico';
+    const EXTENSION_NAME_PDF = 'pdf';
 
     const EXTENSION_VALUE_JPG = 1;
     const EXTENSION_VALUE_JPEG = 2;
@@ -19,6 +20,7 @@ class TypeFileExtension
     const EXTENSION_VALUE_GIF = 4;
     const EXTENSION_VALUE_BMP = 5;
     const EXTENSION_VALUE_ICO = 6;
+    const EXTENSION_VALUE_PDF = 7;
 
     private $value;
 
@@ -30,7 +32,8 @@ class TypeFileExtension
             self::EXTENSION_VALUE_PNG => self::EXTENSION_NAME_PNG,
             self::EXTENSION_VALUE_GIF => self::EXTENSION_NAME_GIF,
             self::EXTENSION_VALUE_BMP => self::EXTENSION_NAME_BMP,
-            self::EXTENSION_VALUE_ICO => self::EXTENSION_NAME_ICO
+            self::EXTENSION_VALUE_ICO => self::EXTENSION_NAME_ICO,
+            self::EXTENSION_VALUE_PDF => self::EXTENSION_NAME_PDF
         ];
     }
 
@@ -56,6 +59,6 @@ class TypeFileExtension
 
     public static function makeFromString(string $string)
     {
-        return new static(array_flip(self::getAvailableValues())[$string]);
+        return new static(array_flip(self::getAvailableValues())[strtolower($string)]);
     }
 }
