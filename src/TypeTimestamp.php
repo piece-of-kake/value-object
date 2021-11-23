@@ -72,4 +72,24 @@ class TypeTimestamp
     {
         return new static(time());
     }
+
+    public static function makeToday()
+    {
+        return new static(strtotime('today'));
+    }
+
+    public static function makeThisWeek()
+    {
+        return new static(strtotime('monday this week'));
+    }
+
+    public static function makeThisMonth()
+    {
+        return new static(strtotime('midnight first day of this month'));
+    }
+
+    public static function makeThisYear()
+    {
+        return new static(strtotime('midnight first day of this year'));
+    }
 }
