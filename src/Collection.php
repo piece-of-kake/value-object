@@ -67,6 +67,15 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
         return null;
     }
 
+    /**
+     * Picks out one random item from the collection
+     * @return mixed
+     */
+    public function random()
+    {
+        return $this->items[array_rand($this->items)];
+    }
+
     public function reduce(callable $callback, $initial)
     {
         $accumulator = $initial;
