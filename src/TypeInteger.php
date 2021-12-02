@@ -37,6 +37,12 @@ class TypeInteger
         return $this;
     }
 
+    public function decrement($amount = 1)
+    {
+        $this->value -= $amount;
+        return $this;
+    }
+
     protected function validateValue()
     {
         if (!is_int($this->value))
