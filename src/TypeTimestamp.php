@@ -90,6 +90,6 @@ class TypeTimestamp
 
     public static function makeThisYear()
     {
-        return new static(strtotime('midnight first day of this year'));
+        return new static(strtotime('midnight first day of january this year'));
     }
 }
