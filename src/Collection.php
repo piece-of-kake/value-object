@@ -96,8 +96,10 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
         if ($oldKey === $newKey) return $this;
 
         $newArray = $this->items;
-        $newArray[$newKey] = $newArray[$oldKey];
-        unset($newArray[$oldKey]);
+        if (array_key_exists($oldKey, $newArray)) {
+            $newArray[$newKey] = $newArray[$oldKey];
+            unset($newArray[$oldKey]);
+        }
 
         return $this->newStatic($newArray);
     }
