@@ -33,7 +33,11 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function map(callable $callback): self
     {
-        return $this->newStatic(array_map($callback, $this->items, array_keys($this->items)));
+        $items = $this->items;
+        foreach ($items as $key => &$value) {
+            $value = $callback($value, $key);
+        }
+        return $this->newStatic($items);
     }
 
     public function filter(callable $callback): Collection
