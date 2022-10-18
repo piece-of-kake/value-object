@@ -6,8 +6,8 @@ use PoK\ValueObject\Exception\InvalidIntegerException;
 
 class TypeInteger
 {
-    private $value;
-    
+    private int $value;
+
     public function __construct($value)
     {
         try {
@@ -15,13 +15,13 @@ class TypeInteger
         } catch (\Exception $exception) {
             throw new InvalidIntegerException();
         }
-        $this->validateValue();
+        $this->validateValue($value);
     }
-    
+
     public function __toString() {
         return (string) $this->value;
     }
-    
+
     public function getValue()
     {
         return $this->value;
@@ -43,9 +43,9 @@ class TypeInteger
         return $this;
     }
 
-    protected function validateValue()
+    protected function validateValue($value)
     {
-        if (!is_int($this->value))
+        if (!is_int($this->value) || !preg_match('/^-?\d+$/',$value))
             throw new InvalidIntegerException();
     }
 }
